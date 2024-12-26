@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>---Jay.B Site----</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff4500, 0 0 80px #ff4500;
+            animation: brilho 1.5s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes brilho {
+            0% {
+                text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff4500, 0 0 80px #ff4500;
+            }
+            100% {
+                text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff6347, 0 0 60px #ff6347, 0 0 120px #ff6347;
+            }
+        }
+
+        button {
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #ff4500;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff6347;
+            box-shadow: 0 0 15px #ff6347;
+        }
+
+        .sucking-effect {
+            animation: sucking 1s forwards;
+        }
+
+        @keyframes sucking {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .black-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 10;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .white-frame {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .input-field {
+            width: 250px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #ff4500;
+        }
+
+        .submit-button {
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background-color: #ff6347;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        /* Novo conteúdo do próximo frame */
+        .next-frame {
+            display: none;
+            background-color: #ff6347;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .next-frame h1 {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff4500, 0 0 80px #ff4500;
+            animation: brilho 1.5s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="siteTitle">---Jay.B Site----</h1>
+    <button id="nextButton">Next</button>
+
+    <div id="blackFrame" class="black-frame">
+        <div class="white-frame">
+            <h2>Create Account</h2>
+            <input type="email" id="email" class="input-field" placeholder="Enter your email" required><br>
+            <input type="password" id="password" class="input-field" placeholder="Enter your password" required><br>
+            <button class="submit-button" id="submitButton">Submit</button>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Novo conteúdo para o próximo frame -->
+    <div id="nextFrame" class="next-frame">
+        <h1>---Jay_B scripts---</h1>
+        <p>Bem-vindo ao site, sua conta foi criada.</p>
+    </div>
+
+    <script>
+        const nextButton = document.getElementById("nextButton");
+        const blackFrame = document.getElementById("blackFrame");
+        const title = document.getElementById("siteTitle");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const submitButton = document.getElementById("submitButton");
+        const errorMessage = document.getElementById("error-message");
+        const nextFrame = document.getElementById("nextFrame");
+
+        nextButton.addEventListener("click", function() {
+            nextButton.classList.add("sucking-effect");
+
+            setTimeout(function() {
+                title.style.display = "none";
+                nextButton.style.display = "none";
+                blackFrame.style.display = "flex";
+            }, 1000);
+        });
+
+        submitButton.addEventListener("click", function() {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validação do email
+            if (!emailPattern.test(email)) {
+                errorMessage.textContent = "Email inválido";
+                emailInput.style.borderColor = "red";
+            } 
+            // Validação da senha
+            else if (password.length < 6) {
+                errorMessage.textContent = "The password need 6 digits";
+                passwordInput.style.borderColor = "red";
+            } else {
+                errorMessage.textContent = "";
+                emailInput.style.borderColor = "#ccc";
+                passwordInput.style.borderColor = "#ccc";
+
+                // Se tudo for válido, mostra o próximo frame
+                setTimeout(function() {
+                    blackFrame.style.display = "none"; // Esconde o frame preto
+                    nextFrame.style.display = "flex";  // Exibe o próximo frame
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
